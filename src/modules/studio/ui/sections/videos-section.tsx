@@ -4,7 +4,7 @@ import { DEFAULT_LIMIT } from "@/constants"
 import { trpc } from "@/trpc/client"
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { InfiniteScroll } from "../components/infinite-scroll"
+import { InfiniteScroll } from "../../../../components/infinite-scroll"
 
 import {
     Table,

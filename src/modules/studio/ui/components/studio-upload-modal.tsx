@@ -1,9 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Loader2, PlusIcon, CheckCircleIcon, XCircleIcon } from "lucide-react"
+import { Loader2, PlusIcon, CheckCircleIcon, XCircleIcon, Loader2Icon } from "lucide-react"
 import { trpc } from "@/trpc/client"
 import { toast } from "sonner"
+import { ResponsiveModal } from "@/components/responsive-modal"
+import { StudioUploader } from "./studio-uploader"
 
 export const StudioUploadModal = () => {
   const utils=trpc.useUtils()
@@ -21,9 +23,22 @@ export const StudioUploadModal = () => {
   }
   })
   return (
-    <Button variant="secondary" onClick={()=>create.mutate()} disabled={create.isPending}>
-        {create.isPending?<Loader2 className="animate-spin"></Loader2>:<PlusIcon></PlusIcon>}
-        Create
-    </Button>
+    <>
+      <ResponsiveModal
+        title="Upload Video"
+        open={!!create.data?.url}
+        onOpenChange={()=>create.reset()}
+      >
+        {
+        create.data?.url
+        ?<StudioUploader endpoint={create.data.url} onSuccess={()=>{}}></StudioUploader> 
+        : <Loader2Icon></Loader2Icon>
+        }
+      </ResponsiveModal>
+      <Button variant="secondary" onClick={()=>create.mutate()} disabled={create.isPending}>
+          {create.isPending?<Loader2 className="animate-spin"></Loader2>:<PlusIcon></PlusIcon>}
+          Create
+      </Button>
+    </>
   )
 }
